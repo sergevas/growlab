@@ -8,7 +8,7 @@ import time
 class growbme280:
     def __init__(self):
         self.bus = SMBus(1)
-        self.sensor = BME280(i2c_dev=self.bus)
+        self.sensor = BME280(i2c_dev=self.bus, i2c_addr=0x76)
 
     def get_readings(self):
         # Ignore first result since it seems stale
