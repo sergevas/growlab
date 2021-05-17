@@ -4,12 +4,12 @@
         "encoding": "jpeg",
         "width": 2592,
         "height": 1944,
-        "image_quality": 70,
+        "image_quality": 100,
         "preview_seconds": 1,
         "vertical_flip": false,
         "horizontal_flip": false,
         "meter_mode": "matrix",
-        "interval_seconds": 600
+        "interval_seconds": 30
     },
     "text": {
         "colour": {

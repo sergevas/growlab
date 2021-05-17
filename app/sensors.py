@@ -26,5 +26,6 @@ class growbme280:
             "time": time_str,
             "temperature": temperature,
             "pressure": pressure,
+            "pressure_mm_hg": int(round(pressure * 0.75006)),
             "humidity": humidity
         }
