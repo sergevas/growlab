@@ -2,6 +2,7 @@ from PIL import Image, ImageFont, ImageDraw
 from jinja2 import Template
 import time
 
+
 class specimen:
     def __init__(self, text_config, image_config):
         self.text_config = text_config
@@ -15,8 +16,10 @@ class specimen:
 
         img = Image.open(filename, "r").convert("RGBA")
         img_draw = ImageDraw.Draw(img)
-        font = ImageFont.truetype('roboto/Roboto-Regular.ttf', self.text_config["size"])
-        colour = (self.text_config["colour"]["red"] ,self.text_config["colour"]["green"], self.text_config["colour"]["blue"])
+        font = ImageFont.truetype(
+            'roboto/Roboto-Regular.ttf', self.text_config["size"])
+        colour = (self.text_config["colour"]["red"], self.text_config["colour"]
+                  ["green"], self.text_config["colour"]["blue"])
 
         text_size = img_draw.textsize(msg, font)
 
@@ -26,8 +29,10 @@ class specimen:
 
         bg_draw = ImageDraw.Draw(bg_img)
         overlay_transparency = 100
-        bg_draw.rectangle((pos[0], pos[1], bg_size[0], bg_size[1]), fill=(0, 0, 0, overlay_transparency), outline=(255, 255, 255))
-        bg_draw.text(xy=(pos[0]+10, pos[1]+10), text=msg, fill=colour, font=font)
+        bg_draw.rectangle((pos[0], pos[1], bg_size[0], bg_size[1]), fill=(
+            0, 0, 0, overlay_transparency), outline=(255, 255, 255))
+        bg_draw.text(xy=(pos[0]+10, pos[1]+10),
+                     text=msg, fill=colour, font=font)
 
         out = Image.alpha_composite(img, bg_img)
         print("Saving {}..".format(filename))
@@ -36,13 +41,14 @@ class specimen:
         print("Saved {}..OK".format(filename))
 
     def format(self, readings):
-        degree_symbol=u"\u00b0"
-        return "#growlab - {}\nTemperature: {:05.2f} {}C \nPressure: {:05.2f} hPa ({:d} mmHg)\nHumidity: {:05.2f} %".format(readings["time"], readings["temperature"], degree_symbol, readings["pressure"], readings["pressure_mm_hg"], readings["humidity"])
+        degree_symbol = u"\u00b0"
+        return "#growlab - {}\nTemperature: {:05.2f} {}C \nPressure: {:05.2f} hPa ({:d} mmHg)\nHumidity: {:05.2f} %".format(readings["time"], readings["temperature"], degree_symbol, readings["pressure"], readings["pressure_mmhg"], readings["humidity"])
 
     def save_html(self, input_filename, output_path, readings):
         img = Image.open(input_filename, "r")
 
-        img = img.resize((int(self.image_config["width"]/2), int(self.image_config["height"]/2)), Image.ANTIALIAS)
+        img = img.resize(
+            (int(self.image_config["width"]/2), int(self.image_config["height"]/2)), Image.ANTIALIAS)
         img.save(output_path+"/preview.jpg", "JPEG")
 
         template_text = ""
@@ -50,12 +56,14 @@ class specimen:
             template_text = file.read()
 
         template = Template(template_text)
-        degree_symbol=u"\u00b0"
+        degree_symbol = u"\u00b0"
         vals = {}
         vals["time"] = readings["time"]
-        vals["temperature"] = "{:05.2f} {}C".format(readings["temperature"], degree_symbol)
+        vals["temperature"] = "{:05.2f} {}C".format(
+            readings["temperature"], degree_symbol)
         vals["humidity"] = "{:05.2f} %".format(readings["humidity"])
-        vals["pressure"] = "{:05.2f} hPa ({:d} mmHg)".format(readings["pressure"], readings[pressure_mm_hg])
+        vals["pressure"] = "{:05.2f} hPa ({:d} mmHg)".format(
+            readings["pressure"], readings["pressure_mmhg"])
         vals["uid"] = "{}".format(time.time())
 
         html = template.render(vals)

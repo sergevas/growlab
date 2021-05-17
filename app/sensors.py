@@ -5,6 +5,7 @@ except ImportError:
 from bme280 import BME280
 import time
 
+
 class growbme280:
     def __init__(self):
         self.bus = SMBus(1)
@@ -26,6 +27,6 @@ class growbme280:
             "time": time_str,
             "temperature": temperature,
             "pressure": pressure,
-            "pressure_mm_hg": int(round(pressure * 0.75006)),
+            "pressure_mmhg": int(round(pressure * 0.75006)),
             "humidity": humidity
         }
