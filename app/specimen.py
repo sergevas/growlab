@@ -37,7 +37,7 @@ class specimen:
 
     def format(self, readings):
         degree_symbol=u"\u00b0"
-        return "#growlab - {}\nTemperature: {:05.2f} {}C \nPressure: {:05.2f} hPa ({0:d} mmHg)\nHumidity: {:05.2f} %".format(readings["time"], readings["temperature"], degree_symbol, readings["pressure"], readings["pressure_mm_hg"], readings["humidity"])
+        return "#growlab - {}\nTemperature: {:05.2f} {}C \nPressure: {:05.2f} hPa ({:d} mmHg)\nHumidity: {:05.2f} %".format(readings["time"], readings["temperature"], degree_symbol, readings["pressure"], readings["pressure_mm_hg"], readings["humidity"])
 
     def save_html(self, input_filename, output_path, readings):
         img = Image.open(input_filename, "r")
@@ -55,7 +55,7 @@ class specimen:
         vals["time"] = readings["time"]
         vals["temperature"] = "{:05.2f} {}C".format(readings["temperature"], degree_symbol)
         vals["humidity"] = "{:05.2f} %".format(readings["humidity"])
-        vals["pressure"] = "{:05.2f} hPa ({0:d} mmHg)".format(readings["pressure"], readings[pressure_mm_hg])
+        vals["pressure"] = "{:05.2f} hPa ({:d} mmHg)".format(readings["pressure"], readings[pressure_mm_hg])
         vals["uid"] = "{}".format(time.time())
 
         html = template.render(vals)
