@@ -1,7 +1,4 @@
 #!/bin/bash
-#export GROWLAB_APP_HOME=/home/pi/git/growlab/app
-
-#cd $GROWLAB_APP_HOME
 
 python3 app.py
 
