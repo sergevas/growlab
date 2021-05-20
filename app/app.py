@@ -1,10 +1,13 @@
 #!/bin/python3
 
 import json
-import os, sys
+import os
+import sys
 from sensors import growbme280
 from camera import camera
 from specimen import specimen
+from pathbuilder import pathbuilder
+from datetime import datetime
 
 if __name__ == "__main__":
     print("Starting growlab")
@@ -16,8 +19,6 @@ if __name__ == "__main__":
     except Exception as e:
         sys.stderr.write("Error: {}".format(e))
         sys.exit(1)
-
-    print("Loaded config, saving images every {} seconds to {}".format( config["images"]["interval_seconds"], config["images"]["output_directory"]))
 
     bme280 = growbme280()
 
@@ -31,11 +32,16 @@ if __name__ == "__main__":
     output_path = pwd + "/html"
 
     try:
-       os.mkdir(output_path)
+        os.mkdir(output_path)
     except:
-       pass
+        pass
 
     spec = specimen(config["text"], config["images"])
-    spec.save_image("{}/image.jpg".format(pwd), frame, readings)
 
-    spec.save_html("{}/image.jpg".format(pwd), output_path, readings)
+    pb = pathbuilder(config["output_directory"],
+                     config["images"]["encoding"], datetime.now())
+    image_file_path = pb.build_file_path()
+
+    spec.save_image(image_file_path, frame, readings)
+
+    spec.save_html(image_file_path, output_path, readings)
