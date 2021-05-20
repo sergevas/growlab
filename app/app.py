@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     spec = specimen(config["text"], config["images"])
 
-    pb = pathbuilder(config["output_directory"],
+    pb = pathbuilder(config["images"]["output_directory"],
                      config["images"]["encoding"], datetime.now())
     image_file_path = pb.build_file_path()
 
