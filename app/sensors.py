@@ -21,7 +21,7 @@ class growbme280:
         temperature = self.sensor.get_temperature()
         pressure = self.sensor.get_pressure()
         humidity = self.sensor.get_humidity()
-        time_str = time.strftime("%H:%M:%S")
+        time_str = time.strftime("%Y-%m-%d %H:%M:%S")
 
         return {
             "time": time_str,
