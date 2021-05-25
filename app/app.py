@@ -1,10 +1,12 @@
 #!/bin/python3
 
 import json
-import os, sys
-from sensors import growbme280, growbmp280, grownosensor
+import os
+import sys
+from sensors import growbme280
 from camera import camera
 from specimen import specimen
+from pathbuilder import pathbuilder
 
 if __name__ == "__main__":
     print("Starting growlab")
@@ -17,19 +19,14 @@ if __name__ == "__main__":
         sys.stderr.write("Error: {}".format(e))
         sys.exit(1)
 
-    print("Loaded config, saving images every {} seconds to {}".format( config["images"]["interval_seconds"], config["images"]["output_directory"]))
+    bme280 = growbme280()
 
-    sensor = None
-    sensor_type = os.getenv("SENSOR_TYPE", "bme280")
-    if sensor_type == "bme280":
-        sensor = growbme280()
-    if sensor_type == "bmp280":
-        sensor = growbmp280()
-    elif sensor_type == "none":
-        sensor = grownosensor()
-
-    readings = sensor.get_readings()
-    print(readings)
+    readings = bme280.get_readings()
+    readings_pathbuilder = pathbuilder(config["data"]["output_directory"],
+                                       "." + config["data"]["encoding"], readings["time"])
+    readings_filepath = readings_pathbuilder.build_file_path()
+    with open(readings_filepath, 'w') as readings_output_file:
+        json.dump(readings, readings_output_file)
 
     cam = camera(config["images"])
     frame = cam.get_frame()
@@ -38,11 +35,16 @@ if __name__ == "__main__":
     output_path = pwd + "/html"
 
     try:
-       os.mkdir(output_path)
+        os.mkdir(output_path)
     except:
-       pass
+        pass
 
     spec = specimen(config["text"], config["images"])
-    spec.save_image("{}/image.jpg".format(pwd), frame, readings)
 
-    spec.save_html("{}/image.jpg".format(pwd), output_path, readings)
+    pb = pathbuilder(config["images"]["output_directory"],
+                     "." + config["images"]["encoding"], readings["time"])
+    image_file_path = pb.build_file_path()
+
+    spec.save_image(image_file_path, frame, readings)
+
+    spec.save_html(image_file_path, output_path, readings)
