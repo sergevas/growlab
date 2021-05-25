@@ -18,5 +18,9 @@
             "blue": 255
         },
         "size": 48
+    },
+    "data": {
+        "output_directory": "/home/pi/growlab/data",
+        "encoding": "json"
     }
 }

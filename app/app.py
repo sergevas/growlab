@@ -23,7 +23,12 @@ if __name__ == "__main__":
     bme280 = growbme280()
 
     readings = bme280.get_readings()
-    print(readings)
+    timestamp_string = readings.readings["time"]
+    readings_pathbuilder = pathbuilder(config["data"]["output_directory"],
+                                       "." + config["data"]["encoding"], timestamp_string)
+    readings_filepath = readings_pathbuilder.build_file_path()
+    with open(readings_filepath, 'w') as readings_output_file:
+        json.dump(readings, readings_output_file)
 
     cam = camera(config["images"])
     frame = cam.get_frame()
@@ -39,7 +44,7 @@ if __name__ == "__main__":
     spec = specimen(config["text"], config["images"])
 
     pb = pathbuilder(config["images"]["output_directory"],
-                     "." + config["images"]["encoding"], datetime.now())
+                     "." + config["images"]["encoding"], timestamp_string)
     image_file_path = pb.build_file_path()
 
     spec.save_image(image_file_path, frame, readings)

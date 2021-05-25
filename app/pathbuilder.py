@@ -1,11 +1,14 @@
 import os
 
+import datetime from datetime
+
 
 class pathbuilder:
-    def __init__(self, base_path, ext, timestamp):
+    def __init__(self, base_path, ext, timestamp_string):
         self.base_path = base_path
         self.ext = ext
-        self.timestamp = timestamp
+        self.timestamp = datetime.strptime(
+            timestamp_string, "%Y-%m-%d %H:%M:%S")
 
     def build_dir_path(self):
         current_dir_name = self.timestamp.strftime("%Y%m%d")
