@@ -17,7 +17,7 @@
             "green": 255,
             "blue": 255
         },
-        "size": 48
+        "size": 24
     },
     "data": {
         "output_directory": "/home/pi/growlab/data",
