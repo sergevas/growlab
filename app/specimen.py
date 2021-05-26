@@ -28,7 +28,7 @@ class specimen:
         bg_img = Image.new('RGBA', img.size, (0, 0, 0, 0))
 
         bg_draw = ImageDraw.Draw(bg_img)
-        overlay_transparency = 25
+        overlay_transparency = 50
         bg_draw.rectangle((pos[0], pos[1], bg_size[0], bg_size[1]), fill=(
             0, 0, 0, overlay_transparency), outline=(255, 255, 255))
         bg_draw.text(xy=(pos[0]+10, pos[1]+10),
