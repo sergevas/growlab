@@ -6,8 +6,8 @@
         "height": 1944,
         "image_quality": 100,
         "preview_seconds": 3,
-        "vertical_flip": false,
-        "horizontal_flip": false,
+        "vertical_flip": true,
+        "horizontal_flip": true,
         "meter_mode": "matrix",
         "interval_seconds": 30
     },
