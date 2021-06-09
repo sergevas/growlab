@@ -22,5 +22,15 @@
     "data": {
         "output_directory": "/home/pi/growlab/data",
         "encoding": "json"
+    },
+    "mqtt": {
+        "broker" {
+
+        },
+        "topic": {
+            "growlab_bme280_topic_request": "cg/{MAC_address}/growlab/sensor/bme280/request",
+            "growlab_bme280_topic_response": "cg/{MAC_address}/growlab/sensor/bme280/response",
+            "growlab_bh1750_topic_request": "cg/{MAC_address}/growlab/sensor/bh1750/request"
+        }
     }
 }
