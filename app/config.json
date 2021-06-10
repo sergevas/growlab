@@ -33,8 +33,9 @@
         "topic": {
             "growlab_bme280_topic_request": "cg/{MAC_address}/growlab/sensor/bme280/request",
             "growlab_cam_topic_request": "cg/{MAC_address}/growlab/sensor/cam/request",
-            "growlab_bh1750_topic_request": "cg/{MAC_address}/growlab/sensor/bh1750/request",
-            "growlab_bh1750_topic_response": "cg/{MAC_address}/growlab/sensor/bh1750/response"
+            "growlab_bh1750_topic_response": "cg/{MAC_address}/growlab/sensor/bh1750/response",
+            "growlab_bh1750_topic_request": "cg/{MAC_address}/sensor/bh1750/request"
+            
         }
     }
 }
