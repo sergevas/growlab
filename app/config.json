@@ -25,12 +25,15 @@
     },
     "mqtt": {
         "broker" {
-
+            "host": "localhost",
+            "port": 8331,
+            "user": "growlab",
+            "password": "todo"
         },
         "topic": {
             "growlab_bme280_topic_request": "cg/{MAC_address}/growlab/sensor/bme280/request",
-            "growlab_bme280_topic_response": "cg/{MAC_address}/growlab/sensor/bme280/response",
-            "growlab_bh1750_topic_request": "cg/{MAC_address}/growlab/sensor/bh1750/request"
+            "growlab_bh1750_topic_request": "cg/{MAC_address}/growlab/sensor/bh1750/request",
+            "growlab_bh1750_topic_response": "cg/{MAC_address}/growlab/sensor/bh1750/response"
         }
     }
 }
