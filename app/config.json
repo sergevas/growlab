@@ -24,7 +24,7 @@
         "encoding": "json"
     },
     "mqtt": {
-        "broker" {
+        "broker": {
             "host": "localhost",
             "port": 8331,
             "user": "growlab",
