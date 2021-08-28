@@ -20,12 +20,12 @@
         "size": 36
     },
     "data": {
-        "output_directory": "/home/pi/growlab/data",
+        "output_directory": "readings",
         "encoding": "json"
     },
     "http": {
-        "base_url": "http://192.168.1.73:8088/growlab/api/v1",
-        "timeout": 60,
+        "base_url": "http://192.168.1.73:8088",
+        "timeout": 0.01,
         "retryAttemts": 3
     }
 }
