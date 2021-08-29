@@ -43,20 +43,30 @@ if __name__ == "__main__":
 
     readings_filepath = readings_pathbuilder.build_file_path()
 
+    print("Readings file output path [", readings_filepath, "]")
+
     with open(readings_filepath, 'w') as readings_output_file:
         json.dump(readings, readings_output_file)
 
-    frame = io.BytesIO(http_client.get_camera_image())
+    is_image_taken = False
+    camera_image = http_client.get_camera_image()
+    if len(camera_image) != 0:
+        is_image_taken = True
+
+    if is_image_taken:
+        frame = io.BytesIO(http_client.get_camera_image())
 
     pwd = os.getcwd()
     output_path = pwd + "/html"
-
+    print("Html page content output path [", output_path, "]")
     try:
         os.mkdir(output_path)
     except:
         pass
 
     spec = specimen(config["text"], config["images"])
-    spec.save_image("{}/image.jpg".format(pwd), frame, readings)
+    if is_image_taken:
+        spec.save_image("{}/image.jpg".format(pwd), frame, readings)
 
-    spec.save_html("{}/image.jpg".format(pwd), output_path, readings)
+    spec.save_html("{}/image.jpg".format(pwd),
+                   output_path, readings, is_image_taken)

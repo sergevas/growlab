@@ -1,6 +1,7 @@
 from PIL import Image, ImageFont, ImageDraw
 from jinja2 import Template
 import time
+import os
 
 
 class specimen:
@@ -60,12 +61,15 @@ class specimen:
 
         return msg.rstrip() + " "
 
-    def save_html(self, input_filename, output_path, readings):
-        img = Image.open(input_filename, "r")
-
-        img = img.resize(
-            (int(self.image_config["width"]/2), int(self.image_config["height"]/2)), Image.ANTIALIAS)
-        img.save(output_path+"/preview.jpg", "JPEG")
+    def save_html(self, input_filename, output_path, readings, is_image_taken):
+        img_file_path = output_path + "/preview.jpg"
+        if is_image_taken:
+            img = Image.open(input_filename, "r")
+            img = img.resize(
+                (int(self.image_config["width"]/2), int(self.image_config["height"]/2)), Image.ANTIALIAS)
+            img.save(img_file_path, "JPEG")
+        elif os.path.exists(img_file_path):
+            os.remove(img_file_path)
 
         template_text = ""
         with open("index.jinja", 'r') as file:
