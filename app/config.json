@@ -1,6 +1,6 @@
 {
     "images": {
-        "output_directory": "./images/",
+        "output_directory": "/home/pi/growlab/images",
         "encoding": "jpeg",
         "width": 2592,
         "height": 1944,
@@ -20,7 +20,7 @@
         "size": 36
     },
     "data": {
-        "output_directory": "readings",
+        "output_directory": "/home/pi/growlab/data",
         "encoding": "json"
     },
     "http": {

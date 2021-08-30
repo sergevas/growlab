@@ -1,15 +1,14 @@
 from datetime import datetime
 
-import time
-
 
 class readingsbuilder:
     readings_structrue = {}
 
-    def __init__(self, thp_readings, light_intensity_readings, camera_mode):
+    def __init__(self, thp_readings, light_intensity_readings, camera_mode, readings_timestamp):
         self.light_intensity_readings = light_intensity_readings
         self.thp_readings = thp_readings
         self.camera_mode = camera_mode
+        self.readings_timestamp = readings_timestamp
 
     def build_tcp_readings(self):
         for thp in self.thp_readings["s_readings"]:
@@ -35,7 +34,7 @@ class readingsbuilder:
             self.readings_structrue["camera_mode"] = "Night-vision mode"
 
     def build_readings_structrue(self):
-        self.readings_structrue["time"] = time.strftime("%Y-%m-%d %H:%M:%S")
+        self.readings_structrue["time"] = self.readings_timestamp
         if "s_readings" in self.thp_readings and len(self.thp_readings["s_readings"]) > 0:
             self.build_tcp_readings()
         if "s_type" in self.light_intensity_readings:

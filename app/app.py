@@ -4,7 +4,8 @@ import json
 import os
 import sys
 import io
-from PIL import Image
+import time
+
 from specimen import specimen
 from growlab_v1_http_client import growlab_v1_http_client
 from readingsbuilder import readingsbuilder
@@ -28,15 +29,14 @@ if __name__ == "__main__":
     thp_readings = http_client.get_thp_readings()
     light_intensity_readings = http_client.get_light_intensity_readings()
     camera_mode = http_client.get_camera_mode()
+    timestamp_string = time.strftime("%Y-%m-%d %H:%M:%S")
 
     r_builder = readingsbuilder(
-        thp_readings, light_intensity_readings, camera_mode)
+        thp_readings, light_intensity_readings, camera_mode, timestamp_string)
 
     readings = r_builder.build_readings_structrue()
 
     print(readings)
-
-    timestamp_string = readings["time"]
 
     readings_pathbuilder = pathbuilder(config["data"]["output_directory"],
                                        "." + config["data"]["encoding"], timestamp_string)
@@ -65,8 +65,9 @@ if __name__ == "__main__":
         pass
 
     spec = specimen(config["text"], config["images"])
+    pb = pathbuilder(config["images"]["output_directory"],
+                     "." + config["images"]["encoding"], timestamp_string)
+    image_file_path = pb.build_file_path()
     if is_image_taken:
-        spec.save_image("{}/image.jpg".format(pwd), frame, readings)
-
-    spec.save_html("{}/image.jpg".format(pwd),
-                   output_path, readings, is_image_taken)
+        spec.save_image(image_file_path, frame, readings)
+    spec.save_html(image_file_path, output_path, readings, is_image_taken)
