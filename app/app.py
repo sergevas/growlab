@@ -68,6 +68,7 @@ if __name__ == "__main__":
     pb = pathbuilder(config["images"]["output_directory"],
                      "." + config["images"]["encoding"], timestamp_string)
     image_file_path = pb.build_file_path()
+    print("Image file output path [", image_file_path, "]")
     if is_image_taken:
         spec.save_image(image_file_path, frame, readings)
     spec.save_html(image_file_path, output_path, readings, is_image_taken)
