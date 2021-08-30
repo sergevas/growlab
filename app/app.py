@@ -22,8 +22,8 @@ if __name__ == "__main__":
         sys.stderr.write("Error: {}".format(e))
         sys.exit(1)
 
-    print("Loaded config, saving images every {} seconds to {}".format(
-        config["images"]["interval_seconds"], config["images"]["output_directory"]))
+    print("Loaded config, saving images to {}".format(
+        config["images"]["output_directory"]))
 
     http_client = growlab_v1_http_client(config["http"])
     thp_readings = http_client.get_thp_readings()
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     readings = r_builder.build_readings_structrue()
 
-    print(readings)
+    # print(readings)
 
     readings_pathbuilder = pathbuilder(config["data"]["output_directory"],
                                        "." + config["data"]["encoding"], timestamp_string)
@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     pwd = os.getcwd()
     output_path = pwd + "/html"
-    print("Html page content output path [", output_path, "]")
+    # print("Html page content output path [", output_path, "]")
     try:
         os.mkdir(output_path)
     except:
