@@ -3,12 +3,18 @@
 import json
 import os
 import sys
+<<<<<<< HEAD
+from sensors import growbme280
+from camera import camera
+from specimen import specimen
+=======
 import io
 import time
 
 from specimen import specimen
 from growlab_v1_http_client import growlab_v1_http_client
 from readingsbuilder import readingsbuilder
+>>>>>>> http
 from pathbuilder import pathbuilder
 
 if __name__ == "__main__":
@@ -22,6 +28,16 @@ if __name__ == "__main__":
         sys.stderr.write("Error: {}".format(e))
         sys.exit(1)
 
+<<<<<<< HEAD
+    bme280 = growbme280()
+
+    readings = bme280.get_readings()
+    readings_pathbuilder = pathbuilder(config["data"]["output_directory"],
+                                       "." + config["data"]["encoding"], readings["time"])
+    readings_filepath = readings_pathbuilder.build_file_path()
+    with open(readings_filepath, 'w') as readings_output_file:
+        json.dump(readings, readings_output_file)
+=======
     print("Loaded config, saving images to {}".format(
         config["images"]["output_directory"]))
 
@@ -42,6 +58,7 @@ if __name__ == "__main__":
                                        "." + config["data"]["encoding"], timestamp_string)
 
     readings_filepath = readings_pathbuilder.build_file_path()
+>>>>>>> http
 
     print("Readings file output path [", readings_filepath, "]")
 
@@ -65,6 +82,16 @@ if __name__ == "__main__":
         pass
 
     spec = specimen(config["text"], config["images"])
+<<<<<<< HEAD
+
+    pb = pathbuilder(config["images"]["output_directory"],
+                     "." + config["images"]["encoding"], readings["time"])
+    image_file_path = pb.build_file_path()
+
+    spec.save_image(image_file_path, frame, readings)
+
+    spec.save_html(image_file_path, output_path, readings)
+=======
     pb = pathbuilder(config["images"]["output_directory"],
                      "." + config["images"]["encoding"], timestamp_string)
     image_file_path = pb.build_file_path()
@@ -72,3 +99,4 @@ if __name__ == "__main__":
     if is_image_taken:
         spec.save_image(image_file_path, frame, readings)
     spec.save_html(image_file_path, output_path, readings, is_image_taken)
+>>>>>>> http

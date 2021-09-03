@@ -1,13 +1,2 @@
 # This timer unit is for a periodic exetion of #growlab app script
 
-
-[Unit]
-Description=Periodically runs sample.sh script
-Requires=growlabapp.service
-
-[Timer]
-Unit=growlabapp.service
-OnUnitActiveSec=10m
-
-[Install]
-WantedBy=timers.target
