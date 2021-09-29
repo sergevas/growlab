@@ -7,9 +7,9 @@ functions:
   submit-sample:
     lang: python3
     handler: ./submit-sample
-    image: ghcr.io/alexellis/submit-sample:0.2.1
+    image: cgsergevas/submit-sample:latest
     environment:
-      influx_host: 192.168.0.21
+      influx_host: 10.62.0.1
       influx_port: 8086
       influx_db: readings
       write_debug: true
