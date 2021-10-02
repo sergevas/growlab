@@ -12,6 +12,7 @@ def handle(req):
 
     # Parse NodeMCU data packet into JSON
     r = json.loads(req)
+    print("Have got a request: ", r)
 
     influx_host = os.getenv("influx_host")
     influx_port = os.getenv("influx_port")
@@ -31,7 +32,10 @@ def handle(req):
     res = client.write_points(points)
     client.close()
 
-    return json.dumps(res)
+    res_json = json.dumps(res)
+    print("Have got a response", res_json)
+
+    return res_json
 
 def get_file(path):
     v = ""
@@ -46,13 +50,24 @@ def make_points(r):
     iso_time = my_date.isoformat()
     points = []
 
-    points.append({
-      "measurement": "temp",
-      "tags":  tags,
-      "time": iso_time,
-      "fields": {
-        "value": float(r["temperature"])
-      }
+    if "status" in r:
+      points.append({
+        "measurement": "status",
+        "tags":  tags,
+        "time": iso_time,
+        "fields": {
+          "value": r["status"]
+        }
+     })
+
+    if "temperature" in r:
+      points.append({
+        "measurement": "temp",
+        "tags":  tags,
+        "time": iso_time,
+        "fields": {
+          "value": float(r["temperature"])
+        }
      })
 
     if "cpu_temperature" in r:
@@ -62,6 +77,56 @@ def make_points(r):
           "time": iso_time,
           "fields": {
             "value": float(r["cpu_temperature"])
+          }
+     })
+
+    if "disk_space_total" in r:
+        points.append({
+          "measurement": "disk_space_total",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["disk_space_total"])
+          }
+     })
+
+    if "disk_space_free" in r:
+        points.append({
+          "measurement": "disk_space_free",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["disk_space_free"])
+          }
+     })
+
+    if "heap_memory_total" in r:
+        points.append({
+          "measurement": "heap_memory_total",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["heap_memory_total"])
+          }
+     })
+
+    if "heap_memory_free" in r:
+        points.append({
+          "measurement": "heap_memory_free",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["heap_memory_free"])
+          }
+     })
+
+    if "heap_memory_max" in r:
+        points.append({
+          "measurement": "heap_memory_max",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["heap_memory_max"])
           }
      })
 
@@ -76,12 +141,23 @@ def make_points(r):
             })
 
     if "pressure" in r:
+        pressureInHg = float(r["pressure"]) / 3386
         points.append({
               "measurement": "pressure",
               "tags":  tags,
               "time": iso_time,
               "fields": {
-              "value": float(r["pressure"])
+              "value": pressureInHg
+             }
+            })
+
+    if "light" in r:
+        points.append({
+              "measurement": "light",
+              "tags":  tags,
+              "time": iso_time,
+              "fields": {
+              "value": float(r["light"])
              }
             })
 
