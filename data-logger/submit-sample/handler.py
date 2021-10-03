@@ -130,6 +130,16 @@ def make_points(r):
           }
      })
 
+    if "heap_memory_used" in r:
+        points.append({
+          "measurement": "heap_memory_used",
+          "tags":  tags,
+          "time": iso_time,
+          "fields": {
+            "value": int(r["heap_memory_used"])
+          }
+     })
+
     if "humidity" in r:
         points.append({
               "measurement": "humidity",
