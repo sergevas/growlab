@@ -1,7 +1,7 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://192.168.1.85:8080
+  gateway: https://cg.sergevas.dev
 
 functions:
   submit-sample:
@@ -11,7 +11,7 @@ functions:
     environment:
       influx_host: influxdb
       influx_port: 8086
-      influx_db: readings
+      influx_db: defaultdb
       write_debug: true
       read_debug: true
       combine_output: false
