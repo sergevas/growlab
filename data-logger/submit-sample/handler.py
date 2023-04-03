@@ -176,4 +176,34 @@ def make_points(r):
             }
         })
 
+    if "soil_temp" in r:
+        points.append({
+            "measurement": "soil_temp",
+            "tags":  tags,
+            "time": iso_time,
+            "fields": {
+                "value": float(r["soil_temp"])
+            }
+        })
+
+    if "soil_moisture" in r:
+        points.append({
+            "measurement": "soil_moisture",
+            "tags":  tags,
+            "time": iso_time,
+            "fields": {
+                "value": float(r["soil_moisture"])
+            }
+        })
+
+    if "pump_stat" in r:
+        points.append({
+            "measurement": "pump_stat",
+            "tags":  tags,
+            "time": iso_time,
+            "fields": {
+                "value": r["pump_stat"]
+            }
+        })
+
     return points
